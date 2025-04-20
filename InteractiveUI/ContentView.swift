@@ -15,6 +15,8 @@ struct ContentView: View {
 //    Lesson Practice Info
     @State private var newName = ""
     @State private var favColor = ""
+    @State private var birthday = Date()
+    @State private var presentAlert = false
     
     var body: some View {
         ZStack {
@@ -43,12 +45,12 @@ struct ContentView: View {
             //    Lesson Practice Code
             
             // General app instructions
-            VStack (spacing: 50) {
+            VStack {
                 
                 VStack {
                     Text("Please answer the following questions and submit your responses when finished!")
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
+                        .font(.title)
+                        .fontWeight(.bold)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.purple)
                 }
@@ -57,14 +59,14 @@ struct ContentView: View {
                 // Name question and text field
                 VStack {
                     Text("What is your name?")
-                        .font(.title)
+                        .font(.title2)
                         .fontWeight(.bold)
                     
                     TextField("Type your name here...", text: $newName)
                         .multilineTextAlignment(.center)
                         .border(Color.green, width: 3)
                         .background(.white)
-                        .font(.title2)
+                        .font(.title3)
                 }
                 .padding()
                 
@@ -72,22 +74,39 @@ struct ContentView: View {
                 // Favorite color question and text field
                 VStack {
                     Text("What is your favorite color?")
-                        .font(.title)
+                        .font(.title2)
                         .fontWeight(.bold)
                     
                     TextField("Type the color here...", text: $favColor)
                         .multilineTextAlignment(.center)
                         .border(Color.green, width: 3)
                         .background(.white)
-                        .font(.title2)
-//  researched code to stop text field from auto capitalizing the word entered
+                        .font(.title3)
+                    
+                    //  researched code to stop text field from auto capitalizing the word entered
                         .textInputAutocapitalization(.never)
                 }
                 .padding()
                 
+                //                Date picker for birthday
+                VStack {
+                    Text("When is your birthday?")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    
+                    DatePicker(selection: $birthday, displayedComponents: [.date], label: {})
+                        .datePickerStyle(.wheel)
+                        .padding()
+                    
+                }
+                .padding()
+                
+                
                 VStack {
                     Button("Submit Responses") {
-                        print("Your name is \(newName) and your favorite color is \(favColor)! 🤗")
+                        presentAlert = true
+                        
+                        //                  print("Your name is \(newName) and your favorite color is \(favColor)! 🤗")
                     }
                     .font(.title)
                     .fontWeight(.bold)
@@ -95,9 +114,18 @@ struct ContentView: View {
                     .tint(.purple)
                 }
                 .padding()
+                .alert("Thank you for your submission!", isPresented: $presentAlert, actions: {
+                    Button("Close") {
+                        newName = ""
+                        favColor = ""
+                        birthday = Date()
+                    }
+                }, message: {
+                    Text("Your name is \(newName), your favorite color is \(favColor), and you were born on \(birthday.formatted(date: .long, time: .omitted))! 🤗")
+                })
             }
         }
-    }
+            }
 }
 
 #Preview {

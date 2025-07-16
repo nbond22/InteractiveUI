@@ -20,7 +20,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Color(.systemGray5)
+            Color(.yellow)
                 .ignoresSafeArea()
             
             //    Initial lesson code

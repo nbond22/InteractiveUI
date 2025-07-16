@@ -77,7 +77,7 @@ struct ContentView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                     
-                    TextField("Type the color here...", text: $favColor)
+                    TextField("Type your color here...", text: $favColor)
                         .multilineTextAlignment(.center)
                         .border(Color.green, width: 3)
                         .background(.white)
